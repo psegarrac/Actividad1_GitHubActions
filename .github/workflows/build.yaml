@@ -1,0 +1,24 @@
+name: Build and Test App
+on: 
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: login to Docker Hub
+      id: login
+      run: docker login -u $ {{ secrets.DOCKER_USER }} -p $ {{ secrets.DOCKER_PASSWORD }}
+    - name: Build the Docker Image
+      id: build
+      run: docker build . --file Dockerfile --tag $ {{ secrets.DOCKER_USER }}/Actividad1_GitHubActions
+    - name: Push the Docker Image
+      id: push
+      run: docker push $ {{ secrets.DOCKER_USER }}/Actividad1_GitHubActions
+
+      
+
+
